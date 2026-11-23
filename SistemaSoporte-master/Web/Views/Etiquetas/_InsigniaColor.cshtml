@@ -1,0 +1,13 @@
+@model EtiquetaVm
+@{
+    // Presentación pura: texto negro o blanco según qué tan claro es el color de fondo.
+    var texto = "#fff";
+    if (Model.Color is { Length: 7 } c && c[0] == '#')
+    {
+        var r = Convert.ToInt32(c.Substring(1, 2), 16);
+        var g = Convert.ToInt32(c.Substring(3, 2), 16);
+        var b = Convert.ToInt32(c.Substring(5, 2), 16);
+        if ((r * 299 + g * 587 + b * 114) / 1000 > 150) texto = "#212529";
+    }
+}
+<span class="badge" style="background-color:@Model.Color; color:@texto">@Model.Nombre</span>
